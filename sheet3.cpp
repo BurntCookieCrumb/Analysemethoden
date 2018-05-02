@@ -1,14 +1,12 @@
 
 /*-------------------------------------------------------------------------------------------------------*/
 // Analysemethoden der Hochenergiephysik
-// Ãœbungsblatt 3
+// Übungsblatt 3
 
 // bearbeitet von Kristina Schmitt
 /*-------------------------------------------------------------------------------------------------------*/
 
 // Includes
-
-#include "stdafx.h"
 
 #include <iostream>
 #include <iomanip>
@@ -43,7 +41,7 @@ void printXY(double *x,  double *y, int numElements) {
 
 	for (int i = 0; i < numElements; i++) {
 
-		cout << " (" << left << setw(5) << setprecision(3) << x[i] << " | " 
+		cout << " (" << left << setw(5) << setprecision(3) << x[i] << " | "
 			         << left << setw(5) << setprecision(3) << y[i] << ")" << endl;
 
 	}
@@ -80,13 +78,13 @@ void printMeanSigmaYbyX(double *x, double *y, int numElements) {
 
 }
 
-void Exercise_2_1(void) {
+void Exercise_3_1(void) {
 
 	cout << endl  << " -- Exercise 1: ---------------------- " << endl << endl;
 	printXY(x, y, arrSize);
 
 	printMeanSigmaYbyX(x, y, arrSize);
-	
+
 
 }
 
@@ -119,7 +117,7 @@ bool contains(int *array, int numElements, int elem) {
 
 void printRoute(route Route, double* x, double* y) {
 
-	cout << "Route: " << endl << endl;
+	cout << " Route: " << endl << endl;
 
 	int elem;
 
@@ -160,7 +158,7 @@ route getShortestRoute(double *x, double *y, int numElements) {
 
 	for (int i = 0; i < numElements; i++){
 
-		// reset variables		
+		// reset variables
 
 		currentLength = 0;
 
@@ -177,7 +175,7 @@ route getShortestRoute(double *x, double *y, int numElements) {
 
 			currentX = nextX;
 			currentY = nextY;
-			
+
 			shortestDist = 0;
 			currentPointOrder[point] = -1;
 
@@ -194,7 +192,7 @@ route getShortestRoute(double *x, double *y, int numElements) {
 					nextX = x[j];
 					nextY = y[j];
 
-				}				
+				}
 			}
 
 			currentLength += shortestDist;
@@ -224,7 +222,7 @@ route getShortestRoute(double *x, double *y, int numElements) {
 }
 
 
-void Exercise_2_2(void){
+void Exercise_3_2(void){
 
 	cout << endl << " -- Exercise 2: ---------------------- " << endl << endl;
 
@@ -232,18 +230,22 @@ void Exercise_2_2(void){
 	printRoute(getShortestRoute(x, y, arrSize), x, y);
 
 	cout << "--> shortest route based on x y pairs on a straight line" << endl << endl;
+	cout << "Input" << endl;
+    printXY(x2, y2, arrSize);
+
+    cout << endl << "shortest " << endl;
 	printRoute(getShortestRoute(x2, y2, arrSize), x2, y2);
 
 }
 
 
-/*
+
 int main()
 {
 
-	Exercise_2_1();
-	Exercise_2_2();
+	Exercise_3_1();
+	Exercise_3_2();
 
 	return 0;
 }
-*/
+
