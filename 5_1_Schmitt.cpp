@@ -3,7 +3,7 @@
 /* ------------------------------------------------------------------------------------------ */
 
 // Analysemethoden der Hochenergiephysik
-// Uebungsblatt 4
+// Uebungsblatt 5
 
 // bearbeitet von Kristina Schmitt
 
@@ -251,13 +251,11 @@ void Exercise_5_1(void){
 
     cout << endl << " -- Exercise 1: ---------------------- " << endl << endl;
 
-    cout << "Stossparameter b = 0fm -> N_coll = " << GlauberMonteCarlo(1000, 0) << endl;
-    cout << "Stossparameter b = 4fm -> N_coll = " << GlauberMonteCarlo(1000, 4) << endl;
-    cout << "Stossparameter b = 8fm -> N_coll = " << GlauberMonteCarlo(1000, 8) << endl;
+    cout << "Stossparameter b = 0fm -> <N_coll> = " << GlauberMonteCarlo(1000, 0) << endl;
+    cout << "Stossparameter b = 4fm -> <N_coll> = " << GlauberMonteCarlo(1000, 4) << endl;
+    cout << "Stossparameter b = 8fm -> <N_coll> = " << GlauberMonteCarlo(1000, 8) << endl;
 
-
-
-
+    cout << endl;
 
 }
 
