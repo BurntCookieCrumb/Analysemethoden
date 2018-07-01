@@ -38,11 +38,11 @@ void JacobiMethod(matrix &A, int dim) {
 	double A_pp;
 	double A_qq;
 
-	vec A_rp(dim);
-	vec A_rq(dim);
+	vec A_rp(dim, 0);
+	vec A_rq(dim, 0);
 
-	vec V_rp(dim);
-	vec V_rq(dim);
+	vec V_rp(dim, 0);
+	vec V_rq(dim, 0); 
 
 	// == Initialize Matrix V of eigenvectors ==
 
@@ -83,9 +83,9 @@ void JacobiMethod(matrix &A, int dim) {
 
 		for (int p = 0; p < dim; p++) {
 
-			for (int q = 0; q < dim; q++) {
+			for (int q = 0; q < p; q++) {
 
-				if (fabs(A[p][q] < epsilon / dim * dim)) continue; // Avoid devision by almost 0
+				//if (fabs(A[p][q] < epsilon / dim * dim)) continue; // Avoid devision by almost 0
 
 				// == Determine Theta ==
 
@@ -174,13 +174,115 @@ void JacobiMethod(matrix &A, int dim) {
 
 	// == Output ==
 
+	ofstream output;
+	output.open("out.txt", ios::app);
+
+	cout << "Eigenvectors: " << endl;
+	output << "Eigenvectors: " << endl;
+
+	for (int row = 0; row < dim; row++) {
+
+		cout << "| ";
+		output << "| ";
+
+		for (int col = 0; col < dim; col++) {
+
+			cout << setprecision(3) << setw(9) << V[row][col] << " | ";
+			output << setprecision(3) << setw(9) << V[row][col] << " | ";
+
+		}
+
+		cout << endl;
+		output << endl;
+
+	}
+
+	cout << endl << "Eigenvalues: " << endl;
+	output << endl << "Eigenvalues: " << endl;
+
+	cout << "| ";
+	output << "| ";
+
+	for (int i = 0; i < dim; i++) {
+
+		cout << setprecision(3) << setw(9) << A[i][i] << " | ";
+		output << setprecision(3) << setw(9) << A[i][i] << " | ";
+
+	}
+
+	cout << endl << endl;
+	output << endl << endl;
+
+	output.close();
+
+}
+
+double PBC(int index, int N, int dim, int lowBound) {
+
+	int upBound = lowBound + dim;
+
+	if (index < lowBound) return index + dim;
+	else if (index >= upBound) return index - dim;
+	else return index;
+
+}
+
+
+void Exercise_7_1(void) {
+
+	cout << "---- Exercise 7: ---- " << endl << endl;
+
+	int N = 4;
+	int dim = N*N;
+
+	matrix A(dim);
+	for (int i = 0; i < dim; i++) {
+		A[i].resize(dim, 0);
+	}
+
+	for (int row = 0; row < dim; row += 4) {
+
+		for (int i = 0; i < N; i++) {
+
+			A[row + i][row + i] = 4;
+
+			A[row + i][PBC((row + i) - 1, N, N, row)] = -1.;
+			A[row + i][PBC((row + i) + 1, N, N, row)] = -1.;
+
+			A[row + i][PBC((row + i) + N, N, dim, 0)] = -1.;
+			A[row + i][PBC((row + i) - N, N, dim, 0)] = -1.;
+		}
+
+
+	}
+
+
+
+	matrix B(dim);
+	for (int i = 0; i < dim; i++) {
+		B[i].resize(dim, 0);
+	}
+
+	for (int row = 0; row < dim; row ++) {
+
+			B[row][row] = 4;
+
+			if (row - 1 >= 0)  B[row][row - 1] = -1.;
+			if (row + 1 < dim) B[row][row + 1] = -1.;
+
+			if (row - N >= 0)  B[row][row - N] = -1.;
+			if (row + N < dim) B[row][row + N] = -1.;
+
+
+	}
+
 	for (int row = 0; row < dim; row++) {
 
 		cout << "| ";
 
 		for (int col = 0; col < dim; col++) {
 
-			cout << V[row][col] << " | ";
+			cout << showpos << B[row][col] << " | ";
 
 		}
 
@@ -188,41 +290,10 @@ void JacobiMethod(matrix &A, int dim) {
 
 	}
 
-	cout << endl << "| ";
-
-	for (int i = 0; i < dim; i++) {
-
-		cout << A[i][i] << " | ";
-
-	}
-
-	cout << endl;
-
-}
-
-void Exercise_7_1(void) {
-
-	cout << "---- Exercise 7: ---- " << endl << endl;
-
-	int dim = 3;
-
-	matrix A(dim);
-	for (int i = 0; i < dim; i++) {
-		A[i].resize(dim, 0);
-	}
-
-	A[0][0] = 0;
-	A[0][1] = 2;
-	A[0][2] = -1;
-	A[1][0] = 2;
-	A[1][1] = -1;
-	A[1][2] = 1;
-	A[2][0] = 2;
-	A[2][1] = -1;
-	A[2][2] = -3;
-
+	cout << endl << endl;
 
 	JacobiMethod(A, dim);
+	JacobiMethod(B, dim);
 
 	
 
